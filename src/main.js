@@ -58,24 +58,32 @@ async function loadMoreImages() {
 
   loader.classList.remove('is-hidden');
 
-  try {
-    const data = await fetchImages(currentSearchValue, currentPage);
+  // try {
+  //   const data = await fetchImages(currentSearchValue, currentPage);
 
-    if (data.hits.length === 0) {
-      loadMoreBtn.classList.add('is-hidden');
-      errorMessage(
-        `We're sorry, but you've reached the end of search results.`
-      );
-      return;
-    }
+  //   if (data.hits.length === 0) {
+  //     loadMoreBtn.classList.add('is-hidden');
+  //     errorMessage(
+  //       `We're sorry, but you've reached the end of search results.`
+  //     );
+  //     return;
+  //   }
 
-    getGallery(galleryList, data.hits);
-    smoothScrollByGalleryHeight();
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loader.classList.add('is-hidden');
+  getGallery(galleryList, data.hits);
+  smoothScrollByGalleryHeight();
+  const totalPages = Math.ceil(data.totalHits / PER_PAGE);
+  if (currentPage >= totalPages) {
+    loadMoreBtn.classList.add('is-hidden');
+    iziToast.info({
+      ...iziToastParam,
+      message: "We're sorry, but you've reached the end of search results.,",
+    });
   }
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     loader.classList.add('is-hidden');
+  //   }
 }
 
 function showLoadMoreBtn(totalHits) {
