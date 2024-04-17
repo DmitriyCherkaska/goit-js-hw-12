@@ -58,16 +58,16 @@ async function loadMoreImages() {
 
   loader.classList.remove('is-hidden');
 
-  // try {
-  //   const data = await fetchImages(currentSearchValue, currentPage);
+  try {
+    const data = await fetchImages(currentSearchValue, currentPage);
 
-  //   if (data.hits.length === 0) {
-  //     loadMoreBtn.classList.add('is-hidden');
-  //     errorMessage(
-  //       `We're sorry, but you've reached the end of search results.`
-  //     );
-  //     return;
-  //   }
+    if (data.hits.length === 0) {
+      loadMoreBtn.classList.add('is-hidden');
+      errorMessage(
+        `We're sorry, but you've reached the end of search results.`
+      );
+      return;
+    }
 
     getGallery(galleryList, data.hits);
     smoothScrollByGalleryHeight();
